@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="movieInput" placeholder="Enter movie name">
+    <button id="searchButton">Search</button>   
+    <div id="movieDetails"></div>
+
+
+    <script>
+        let searchButton = document.getElementById('searchButton');
+        
+        searchButton.addEventListener('click', function() {
+            let movieName = document.getElementById('movieInput').value;
+            let url = `http://www.omdbapi.com/?t=${movieName}&apikey=30121375`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('movieDetails').innerHTML = `
+                        <h2>${data.Title}</h2>
+                        <p>${data.Plot}</p>
+                        <img src="${data.Poster}" alt="${data.Title}">
+                    `;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+        
+    </script>
+</body>
+</html>

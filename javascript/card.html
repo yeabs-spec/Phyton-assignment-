@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Starter Template</title>
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+  <style>
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      border: none;
+      position: relative;
+      margin-bottom: 30px;
+      box-shadow:
+        0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1),
+        0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1),
+        0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12),
+        0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+    }
+
+    .l-bg-cherry {
+      background: linear-gradient(to right, #493240, #f09) !important;
+      color: #fff;
+    }
+
+    .l-bg-blue-dark {
+      background: linear-gradient(to right, #373b44, #4286f4) !important;
+      color: #fff;
+    }
+
+    .l-bg-green-dark {
+      background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+      color: #fff;
+    }
+
+    .l-bg-orange-dark {
+      background: linear-gradient(to right, #a86008, #ffba56) !important;
+      color: #fff;
+    }
+
+    .l-bg-cyan {
+      background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+      color: #fff;
+    }
+
+    .l-bg-green {
+      background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+      color: #fff;
+    }
+
+    .l-bg-orange {
+      background: linear-gradient(to right, #f9900e, #ffba56) !important;
+      color: #fff;
+    }
+
+    .card .card-statistic-3 .card-icon-large .fas,
+    .card .card-statistic-3 .card-icon-large .far,
+    .card .card-statistic-3 .card-icon-large .fab,
+    .card .card-statistic-3 .card-icon-large .fal {
+      font-size: 110px;
+    }
+
+    .card .card-statistic-3 .card-icon {
+      text-align: center;
+      line-height: 50px;
+      margin-left: 15px;
+      color: #000;
+      position: absolute;
+      right: -5px;
+      top: 20px;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container mt-5">
+    <div class="row" id="card_holder"></div>
+  </div>
+
+  <div class=" container mt-3 text-center  mx-auto">
+    <button type="button" onclick="randomGenerate()" style="width:200px" class="btn btn-danger  mx-auto">Start</button>
+    </div>
+    <div class=" container mt-3 text-center mx-auto">
+    <button type="button" onclick="check()" style="width:200px"  class="btn btn-danger  mx-auto">Submit</button>
+  </div>
+
+  
+  <div class="container mt-3 text-center mx-auto">
+    <h4 id="scoreDisplay">Your Score: 0 / 6</h4>
+  </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let generatedNumbers = [];
+
+const randomGenerate = () => {
+      generatedNumbers = [];
+      let id = 1;
+      while (generatedNumbers.length < 6) {
+        let num = Math.floor(Math.random() * 30);
+        generatedNumbers.push(num);
+        document.getElementById('numberValue' + id).innerHTML = num;
+        id++;
+      }
+
+
+      setTimeout(() => {
+        for (let i = 1; i <= 6; i++) {
+          document.getElementById('numberValue' + i).innerHTML = '';
+        }
+      }, 2000); 
+    };
+
+
+    let id = 1;
+    for (let i = 0; i < 6; i++) {
+      const card = document.createElement('div');
+      card.className = 'col-xl-2 col-lg-2 mb-3';
+
+      const cardContent = document.createElement('div');
+      cardContent.className = 'card l-bg-cherry';
+
+      const cardStatistic = document.createElement('div');
+      cardStatistic.className = 'card-statistic-3 p-4';
+
+      const data = document.createElement('div');
+      data.className = 'mb-4';
+
+      const cardTitle = document.createElement('h5');
+      cardTitle.className = 'card-title mb-0';
+      cardTitle.innerHTML = 'Number';
+
+      data.appendChild(cardTitle);
+      cardStatistic.appendChild(data);
+
+      const numberRow = document.createElement('div');
+      numberRow.className = 'row align-items-center mb-2 d-flex';
+
+      const numberCol = document.createElement('div');
+      numberCol.className = 'col-8';
+
+      const numberValue = document.createElement('h2');
+      numberValue.className = 'd-flex align-items-center mb-0';
+      numberValue.innerHTML = '';
+
+      numberValue.id = 'numberValue' + id;
+      id++;
+
+      numberCol.appendChild(numberValue);
+      numberRow.appendChild(numberCol);
+      cardStatistic.appendChild(numberRow);
+
+      cardContent.appendChild(cardStatistic);
+      card.appendChild(cardContent);
+
+      document.getElementById('card_holder').appendChild(card);
+
+
+      let inputGroup = document.createElement('div');
+      inputGroup.className = ' col-xl-2 col-lg-2 ';
+      let inputField = document.createElement('input');
+      inputField.type = 'number';
+      inputField.className = 'form-control col-xl-2 col-lg-2';
+      inputField.id = 'input' + (i + 1);
+      inputField.placeholder = 'Enter a number';
+
+      inputGroup.appendChild(inputField);
+      document.getElementById('card_holder').appendChild(inputGroup);
+    }
+
+
+    const check = () => {
+      let score = 0;
+      for (let i = 1; i <= 6; i++) {
+        let enteredValue = document.getElementById('input' + i).value;
+        let correctNumber = generatedNumbers[i - 1];
+        if (parseInt(enteredValue) === correctNumber) {
+          score++;
+        }
+      }
+
+
+      document.getElementById('scoreDisplay').innerHTML = 'Your Score: ' + score + ' / 6';
+    };
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script>
+        let list = [];
+        let container = document.getElementById("container");
+
+        const header = document.createElement("h2");
+        header.innerHTML = "Todo List";
+        header.style.textAlign = "left";
+        header.style.marginTop = "10px";
+        container.append(header);
+
+        const userin = document.createElement("input");
+        userin.id = "input1";
+        userin.placeholder = "Enter here";
+        userin.style.padding = "10px 20px";
+        container.append(userin);
+
+        const button = document.createElement("button");
+        button.innerHTML = "Add";
+        button.style.backgroundColor = "blue";
+        button.style.color = "white";
+        button.style.padding = "10px 20px";
+        button.onclick = () => {
+            list.push(userin.value);
+            userin.value = "";
+            console.log(list); // Check the list in the console
+            render(); // Render the list
+        };
+        container.append(button);
+
+        const todolistdiv = document.createElement("div");
+        container.append(todolistdiv);
+
+        function render() {
+            todolistdiv.innerHTML = ""; // Clear the list before rendering again
+
+            list.forEach((toDo, i) => {
+                const toDoDiv = document.createElement('div');
+                toDoDiv.innerHTML = toDo;
+                toDoDiv.style.width = "100%";
+                toDoDiv.id = "toDo" + i;
+                todolistdiv.append(toDoDiv);
+            });
+        }
+    </script>
+
+</body>
+</html>

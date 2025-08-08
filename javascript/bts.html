@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chart.js Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style></style>
+</head>
+<body>
+
+<h2>Employee Salaries (Sample)</h2>
+<canvas id="myChart"></canvas>
+
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [
+        'Employee 1', 'Employee 2', 'Employee 3', 'Employee 4', 'Employee 5',
+        'Employee 6', 'Employee 7', 'Employee 8', 'Employee 9', 'Employee 10'
+      ],
+      datasets: [{
+        label: 'Salary ($)',
+        data: [55000, 78000, 62000, 70000, 45000, 56000, 82000, 63000, 71000, 44000],
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 0)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+
+  });
+  
+</script>
+
+</body>
+</html>

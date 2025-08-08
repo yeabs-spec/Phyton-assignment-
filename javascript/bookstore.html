@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cinema Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #eee;
+    }
+    canvas {
+      max-width: 500px;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<h1>cinema</h1>
+
+<div class="dashboard">
+  <div class="card">
+    <h3>all movies to stream</h3>
+    <p><strong>120</strong></p>
+  </div>
+  <div class="card">
+    <h3>Total Revenue</h3>
+    <p><strong>$24,580</strong></p>
+  </div>
+  <div class="card">
+    <h3>Genres</h3>
+    <p><strong>action, Sci-Fi, roma, Horror</strong></p>
+  </div>
+</div>
+
+<canvas id="salesChart"></canvas>
+<canvas id="stockChart"></canvas>
+
+<h2 > cinema </h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th><th>Director</th><th>Genre</th><th>Price</th><th>Sold</th><th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>The Future World</td><td>J. Smith</td><td>Sci-Fi</td><td>$15</td><td>200</td><td>40</td></tr>
+    <tr><td>Learning HTML</td><td>Anne Ray</td><td>Education</td><td>$20</td><td>150</td><td>30</td></tr>
+    <tr><td>The Roman Empire</td><td>Mark Jone</td><td>Horror</td><td>$25</td><td>100</td><td>20</td></tr>
+    <tr><td>Midnight Stories</td><td>R. Walker</td><td>romance</td><td>$18</td><td>120</td><td>50</td></tr>
+    <tr><td>CSS Secrets</td><td>Sarah L.</td><td>Education</td><td>$22</td><td>180</td><td>25</td></tr>
+  </tbody>
+</table>
+
+<script>
+  // Bar Chart: Sales by Genre
+  const salesCtx = document.getElementById('salesChart').getContext('2d');
+  new Chart(salesCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Fiction', 'Sci-Fi', 'Education', 'History'],
+      datasets: [{
+        label: 'movies Sold',
+        data: [120, 200, 330, 100],
+        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'movies Sold by Genre'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Doughnut Chart: Stock Distribution
+  const stockCtx = document.getElementById('stockChart').getContext('2d');
+  new Chart(stockCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Fiction', 'Sci-Fi', 'Education', 'History'],
+      datasets: [{
+        label: 'Stock',
+        data: [50, 40, 55, 20],
+        backgroundColor: [
+          '#f38b4a',
+          '#56d798',
+          '#ff8397',
+          '#6970d5'
+        ],
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Current Stock by Genre'
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

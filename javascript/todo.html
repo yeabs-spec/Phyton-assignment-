@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        let list = JSON.parse(localStorage.getItem('list')) || [];
+        let container = document.getElementById('container');
+
+        const header = document.createElement('h3')
+            header.innerHTML = "To Do List"
+            header.style.textAlign = "left"
+            header.style.marginTop = "10px"
+
+            container.append(header);
+
+        const userInput = document.createElement('input')
+            userInput.id = "userInput"
+            userInput.style.padding = "10px 20px"
+            userInput.placeholder = "enter todo"
+        container.append(userInput);
+
+        const button = document.createElement('button')
+            button.innerHTML = "add";
+            button.style.backgroundColor = "black"
+            button.style.color = "white"
+            button.style.padding = "10px 30px"
+            button.onclick = () => {
+                list.push(userInput.value);
+                userInput.value = "";
+                saveToLocalStorage();
+                render();
+            }        
+        container.append(button)
+
+        const toDoListContainer = document.createElement('div');
+        container.append(toDoListContainer);
+
+        function render () {
+            toDoListContainer.innerHTML = "";
+
+            list.forEach((toDo, i) => {
+                const toDoDiv = document.createElement('div');
+                    toDoDiv.innerHTML = toDo;
+                    toDoDiv.style.width = "100%"
+                    toDoDiv.id = "toDo" + i;
+                toDoListContainer.append(toDoDiv);
+
+                const button = document.createElement('button')
+                    button.innerHTML = "delete"
+                    button.style.backgroundColor = "red"
+                    button.style.color = "white"
+                    button.style.marginLeft = "auto"
+                    button.onclick = () => {
+                        list.splice(i, 1);
+                        saveToLocalStorage();
+                        render();
+                    }
+                toDoDiv.append(button);
+            })
+            console.log(list)
+        }
+
+        function saveToLocalStorage () {
+            localStorage.setItem('list', JSON.stringify(list));
+        }
+
+        render();
+    </script>
+</body>
+</html>

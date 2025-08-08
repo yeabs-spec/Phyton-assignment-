@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Large Data Table</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #3cd60e;
+      text-align: left;
+    }
+    th {
+      background-color: #c6bd16;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #a82020;
+    }
+    .table-container {
+      height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Employee Records</h2>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Salary</th>
+      </tr>
+    </thead>
+    <tbody>
+       
+      <script>
+        const departments = ["HR", "Engineering", "Marketing", "Sales", "Finance"];
+        const positions = ["Analyst", "Manager", "Director", "Intern", "Executive"];
+
+        for (let i = 1; i <= 100; i++) {
+          const dept = departments[Math.floor(Math.random() * departments.length)];
+          const pos = positions[Math.floor(Math.random() * positions.length)];
+          const salary = (Math.floor(Math.random() * 100000) + 30000).toLocaleString();
+          document.write(`
+            <tr>
+              <td>${i}</td>
+              <td>Employee ${i}</td>
+              <td>${dept}</td>
+              <td>${pos}</td>
+              <td>$${salary}</td>
+            </tr>
+          `);
+        }
+      </script>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

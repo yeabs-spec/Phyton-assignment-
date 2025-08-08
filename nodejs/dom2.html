@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <title>Document Object Model</title>
+    </head>
+    <body>
+
+     
+     <img id="myimage" src="download.jpg" width="400">
+
+<div>
+<button class="btn btn-primary mx-3  mt-3" onclick="changeimage()">Hello</button>
+</div>
+<script>
+    function changeimage() {
+        document.getElementById("myimage").src = "images.jpg";
+        document.getElementById("myimage").width="400";
+    }
+</script>
+
+    </body>
+  </html>

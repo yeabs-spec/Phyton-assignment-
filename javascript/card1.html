@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <body>
+
+    <div id="list"></div>
+    <script>
+
+let links = JSON.parse(localStorage.getItem('links')) || [];
+
+let card = document.createElement("div");
+card.className= "card mx-2 mt-2";
+
+
+let cardbody = document.createElement("div");
+cardbody.className = "card-body";
+
+let head=document.createElement("h2");
+head.className="card-title";
+head.style.textAlign="center";
+head.innerHTML= "Bookmarks";
+
+
+
+let input = document.createElement('div');
+        input.className = ' col-xl-2 col-lg-2 ';
+
+
+let inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.className = 'form-control col-xl-2 col-lg-2';
+      inputField.id = 'input1'; 
+      inputField.placeholder = 'Enter a link';
+      inputField.style.width = '600px';
+      inputField.style.marginLeft = '20px';
+     let button=document.createElement('button');
+      button.className = 'btn btn-primary';
+      button.style.width="150px";
+      button.style.height="40px";
+      button.innerHTML = 'Add Link';
+      button.style.marginLeft = '20px';
+      button.style.marginTop = '20px';
+const check = () => {
+  let inputValue = document.getElementById('input1').value;
+  if (inputValue === "") {
+    alert("Please enter a link");
+  } else {  
+  links.push({ index: links.length + 1, URL: inputValue });
+  localStorage.setItem('links', JSON.stringify(links));
+  document.getElementById('input1').value = '';
+  displayy();
+  }
+    
+};
+
+      button.onclick = check;
+
+cardbody.appendChild(head);
+cardbody.appendChild(input);
+input.appendChild(inputField);
+input.appendChild(button);
+card.appendChild(cardbody);
+document.getElementById('list').appendChild(card);
+
+const displayy = () => {
+  let linksContainer = document.createElement('div');
+  linksContainer.className = 'mt-3';
+
+  links.forEach((link, index) => {
+    let linkItem = document.createElement('div');
+    linkItem.className = 'd-flex align-items-center mb-2';
+
+    let linkText = document.createElement('a');
+    linkText.href = link.URL;
+    linkText.target = '_blank';
+    linkText.innerHTML = link.URL;
+    linkText.className = 'me-3';
+
+    let deleteButton = document.createElement('button');
+    deleteButton.className = 'btn btn-danger';
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.onclick = () => {
+      links.splice(index, 1);
+      localStorage.setItem('links', JSON.stringify(links));
+      linksContainer.innerHTML = '';
+      displayy();
+    };
+
+    linkItem.appendChild(linkText);
+    linkItem.appendChild(deleteButton);
+    linksContainer.appendChild(linkItem);
+  });
+
+  cardbody.appendChild(linksContainer);
+};
+
+displayy();
+
+
+</script>
+</body>
+</html>

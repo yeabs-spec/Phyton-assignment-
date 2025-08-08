@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+   
+</head>
+<body>
+    <div class="card dx-auto" id="cc"></div> 
+
+<script>
+  const main = document.getElementById('cc');
+let url = 'https://saurav.tech/NewsAPI/top-headlines/category/health/in.json';
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    data.articles.forEach(element => {
+      const row = document.createElement('div');
+      row.className = "container";
+      row.style.display="flex"
+      row.style.flexDirection="row"
+      main.append(row);
+
+      const card = document.createElement('div');
+      card.className = "card";
+      card.style.marginBottom = '20px';
+      card.style.width = "450px";
+      card.style.height = "570px";
+      card.style.border = "2px solid #ccc";
+
+      row.append(card);
+
+      const image = document.createElement("img");
+      image.className = "card-img-top";
+      image.style.margin = "0 auto";
+      image.style.width = "400px";
+      image.style.height = "300px";
+      image.style.display = "block";
+      image.src = element.urlToImage;
+      card.append(image);
+
+      const title = document.createElement("h3");
+      title.style.marginLeft = "25px";
+      title.style.textDecoration = "underline";
+      title.innerHTML = element.title;
+      card.append(title);
+
+      const header = document.createElement("h3");
+      header.innerHTML = element.author;
+      header.style.marginLeft = "20px";
+      header.style.textDecoration = "underline";
+      card.append(header);
+
+      const timee = document.createElement("h5");
+      timee.innerHTML = "Published at: " + element.publishedAt;
+      card.append(timee);
+
+      const desript = document.createElement('p');
+      desript.innerHTML = element.description;
+      card.append(desript);
+
+      const btn = document.createElement('button');
+      btn.innerHTML = "More";
+      btn.style.backgroundColor = "green";
+      btn.style.color = "white";
+      btn.style.marginBottom = "10px";
+      btn.onclick = () => {
+        window.location.href = element.url;
+      };
+      card.append(btn);
+    });
+
+  });
+
+
+
+</script>
+
+</body>
+</html>

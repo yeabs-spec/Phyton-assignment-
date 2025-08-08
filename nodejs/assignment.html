@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multiple Choice Quiz (A to D)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+
+  <div class="container">
+    <h2 class="mb-4">Add Quiz Questions</h2>
+    <form id="questionForm" class="border p-4 bg-white rounded shadow mb-4">
+      <div class="mb-3">
+        <label class="form-label">Question</label>
+        <input type="text" class="form-control" id="questionText" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Option A</label>
+        <input type="text" class="form-control" id="optionA" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Option B</label>
+        <input type="text" class="form-control" id="optionB" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Option C</label>
+        <input type="text" class="form-control" id="optionC" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Option D</label>
+        <input type="text" class="form-control" id="optionD" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Correct Answer (A, B, C, or D)</label>
+        <input type="text" class="form-control" id="correctAnswer" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Question</button>
+    </form>
+
+    <button id="startQuizBtn" class="btn btn-success mb-4">Start Quiz</button>
+
+    <form id="answerForm" class="border p-4 bg-white rounded shadow d-none">
+      <div id="displayQuestion" class="mb-3 fw-bold text-dark"></div>
+      <div class="form-check">
+        <input type="radio" name="answer" value="A" class="form-check-input" id="ansA">
+        <label class="form-check-label" id="labelA" for="ansA">A:</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="answer" value="B" class="form-check-input" id="ansB">
+        <label class="form-check-label" id="labelB" for="ansB">B:</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="answer" value="C" class="form-check-input" id="ansC">
+        <label class="form-check-label" id="labelC" for="ansC">C:</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="answer" value="D" class="form-check-input" id="ansD">
+        <label class="form-check-label" id="labelD" for="ansD">D:</label>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Submit Answer</button>
+    </form>
+
+    <div id="result" class="mt-4 fw-bold fs-5"></div>
+  </div>
+
+  <script>
+    const questions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    document.getElementById('questionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const question = {
+        question: document.getElementById('questionText').value,
+        A: document.getElementById('optionA').value,
+        B: document.getElementById('optionB').value,
+        C: document.getElementById('optionC').value,
+        D: document.getElementById('optionD').value,
+        correct: document.getElementById('correctAnswer').value.toUpperCase()
+      };
+
+      questions.push(question);
+      alert("Question added!");
+      e.target.reset();
+    });
+
+    document.getElementById('startQuizBtn').addEventListener('click', function() {
+      if (questions.length === 0) {
+        alert("Please add at least one question!");
+        return;
+      }
+
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById('answerForm').classList.remove('d-none');
+      this.style.display = 'none';
+      document.getElementById('questionForm').style.display = 'none';
+      showQuestion();
+    });
+function showQuestion() {
+      const q = questions[currentQuestionIndex];
+      document.getElementById('displayQuestion').textContent = q.question;
+      document.getElementById('labelA').textContent = "A: " + q.A;
+      document.getElementById('labelB').textContent = "B: " + q.B;
+      document.getElementById('labelC').textContent = "C: " + q.C;
+      document.getElementById('labelD').textContent = "D: " + q.D;
+
+      document.querySelectorAll('input[name="answer"]').forEach(input => input.checked = false);
+    }
+
+    document.getElementById('answerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const selected = document.querySelector('input[name="answer"]:checked');
+      if (!selected) {
+        alert("Please select an answer.");
+        return;
+      }
+
+      if (selected.value === questions[currentQuestionIndex].correct) {
+        score++;
+      }
+
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById('answerForm').classList.add('d-none');
+        document.getElementById('result').textContent = `Quiz finished! Your score: ${score} / ${questions.length}`;
+      }
+    });
+  </script>
+
+</body>
+</html>

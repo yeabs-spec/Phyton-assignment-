@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5"></div>
+        <div id="resultCard" class="card" style="display: none;">
+            <div class="card-body"></div>
+                <h5 class="card-title">Perimeter Result</h5>
+                <p class="card-text" id="resultText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const calculatePerimeter = (a, b, c) => a + b + c;
+        const result = calculatePerimeter(3, 4, 5);
+
+        // Save to local storage
+        localStorage.setItem('perimeter', result);
+
+        // Display in card format
+        const resultText = document.getElementById('resultText');
+        const resultCard = document.getElementById('resultCard');
+        resultText.textContent = `The perimeter is: ${result}`;
+        resultCard.style.display = 'block';
+        const storedResult = localStorage.getItem('perimeter');
+        if (storedResult) {
+            resultText.textContent = `The perimeter is: ${storedResult}`;
+        }
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotational Savings and Credit Association</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Rotational Savings</h1>
+        <div class="form-group">
+            <label for="memberName">Member Name</label>
+            <input type="text" class="form-control" id="memberName" placeholder="Enter member name">
+        </div>
+        <button id="addMember" class="btn btn-primary">Add Member</button>
+        <button id="rotateSavings" class="btn btn-success">Rotate Savings</button>
+        <ul id="membersList" class="list-group mt-3"></ul>
+        <div id="result" class="mt-3"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        (function() {
+            const members = [];
+            document.getElementById('addMember').addEventListener('click', () => {
+                const memberName = document.getElementById('memberName').value;
+                const fixedContributionAmount = 1000;
+                if (memberName) {
+                    members.push({ name: memberName, amount: fixedContributionAmount });
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = `${memberName} - ${fixedContributionAmount}`;
+                    document.getElementById('membersList').appendChild(listItem);
+                    document.getElementById('memberName').value = '';
+                    document.getElementById('contributionAmount').value = '';
+                }
+            });
+
+            document.getElementById('rotateSavings').addEventListener('click', () => {
+                if (members.length > 0) {
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = '';
+                    const fixedAmount = 1000;
+                    const winnerIndex = Math.floor(Math.random() * members.length);
+                    const winner = members[winnerIndex];
+                    const resultItem = document.createElement('p');
+                    resultItem.textContent = `${winner.name} receives ${fixedAmount}`;
+                    resultDiv.appendChild(resultItem);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

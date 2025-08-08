@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    
+</head>
+<body>
+    <script>
+const maindiv=document.createElement('div');
+maindiv.className="container";
+
+const rowdiv=document.createElement('div');
+rowdiv.className="row";
+
+      maindiv.append(rowdiv);
+
+    const inputt=document.createElement('input');
+            inputt.type = "text";
+            inputt.placeholder="Enter movie name";
+            inputt.className="col-lg-3 mx-auto";
+            inputt.id="movieInput";
+            rowdiv.append(inputt);
+
+       const button=document.createElement("button")
+             button.innerHTML="search"
+             button.style.backgroundColor="blue"
+             button.style.color="white" 
+             rowdiv.append(button)
+
+             document.body.append(maindiv);
+
+
+    </script>
+    
+</body>
+</html>

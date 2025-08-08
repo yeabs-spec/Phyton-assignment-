@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Recommender</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5 col-6 mx-auto">
+    <div class="card shadow-lg">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Movie Recommendation by Age</h3>
+        
+        <div class="mb-3">
+          <label for="ageInput" class="form-label">Enter your age:</label>
+          <input type="number" class="form-control" id="ageInput" placeholder="age here">
+        </div>
+        
+        <div class="d-grid gap-2">
+          <button class="btn btn-dark" onclick="recommend()">Get Recommendations</button>
+        </div>
+        
+        <div class="mt-4" id="result" style="display: none;">
+          <h5>Category: <span id="categoryName"></span></h5>
+          <p>Recommended Movies:</p>
+          <ul id="movieList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const movieCategories = [
+      {
+        category: "Kids",
+        minAge: 0,
+        maxAge: 12,
+        movies: ["The Lion King", "Finding Nemo", "Toy Story", "Frozen", "Moana", "Zootopia", "Up", "Coco", "Inside Out", "Despicable Me", "Kung Fu Panda", "Shrek", "Cars", "The Incredibles", "Ratatouille", "Madagascar", "Monsters, Inc.", "WALL-E", "Tangled", "Brave", "Luca", "Encanto"]
+      },
+      {
+        category: "Teens",
+        minAge: 13,
+        maxAge: 17,
+        movies: ["Spider-Man: Homecoming", "The Hunger Games", "Harry Potter", "To All the Boys", "The Maze Runner", "Twilight", "Divergent", "Percy Jackson", "The Fault in Our Stars", "The Karate Kid", "Enola Holmes", "Narnia", "Love, Simon", "Jumanji", "Pitch Perfect", "Mean Girls", "Clueless", "High School Musical", "10 Things I Hate About You", "Stargirl", "Edge of Seventeen", "The DUFF"]
+      },
+      {
+        category: "Young Adults",
+        minAge: 18,
+        maxAge: 25,
+        movies: ["Inception", "The Social Network", "Whiplash", "Interstellar", "Fight Club", "The Matrix", "Joker", "The Wolf of Wall Street", "Her", "La La Land", "Parasite", "Scott Pilgrim", "500 Days of Summer", "Get Out", "The Perks of Being a Wallflower", "Birdman", "Grand Budapest Hotel", "Arrival", "Donnie Darko", "Drive", "Ex Machina", "The Prestige"]
+      },
+      {
+        category: "Adults",
+        minAge: 26,
+        maxAge: 50,
+        movies: ["Shawshank Redemption", "Forrest Gump", "The Godfather", "The Dark Knight", "Pulp Fiction", "Gladiator", "The Departed", "No Country for Old Men", "Green Mile", "Saving Private Ryan", "Good Will Hunting", "The Big Short", "Spotlight", "American Beauty", "Se7en", "Catch Me If You Can", "Imitation Game", "Gone Girl", "Moneyball", "Prisoners", "Cast Away", "The Revenant"]
+      },
+      {
+        category: "Seniors",
+        minAge: 51,
+        maxAge: 120,
+        movies: ["Casablanca", "Gone with the Wind", "On Golden Pond", "Driving Miss Daisy", "Sound of Music", "My Fair Lady", "Singin’ in the Rain", "Doctor Zhivago", "Bridge on the River Kwai", "Lawrence of Arabia", "12 Angry Men", "It’s a Wonderful Life", "Ben-Hur", "The African Queen", "Chariots of Fire", "To Kill a Mockingbird", "Fiddler on the Roof", "An Affair to Remember", "The Sting", "Guess Who’s Coming to Dinner", "Dial M for Murder", "Rear Window"]
+      }
+    ];
+
+    function getTwoRandomMovies(list) {
+      if (list.length >= 2) {
+        let first = Math.floor(Math.random() * list.length);
+        let second;
+        do {
+          second = Math.floor(Math.random() * list.length);
+        } while (second === first);
+        return [list[first], list[second]];
+      } else if (list.length === 1) {
+        return [list[0]];
+      } else {
+        return ["No movies available"];
+      }
+    }
+
+function recommend() {
+      const age = parseInt(document.getElementById("ageInput").value);
+      const resultDiv = document.getElementById("result");
+      const categoryName = document.getElementById("categoryName");
+      const movieList = document.getElementById("movieList");
+
+      resultDiv.style.display = "none";
+      movieList.innerHTML = "";
+
+      if (isNaN(age)) {
+        alert("Age must be a number.");
+      } else if (age < 0) {
+        alert("Age cannot be negative.");
+      } else if (age > 120) {
+        alert("Age seems too high. Please enter a realistic age.");
+      } else {
+        const category = movieCategories.find(c => age >= c.minAge && age <= c.maxAge);
+        if (!category) return;
+
+        const movies = getTwoRandomMovies(category.movies);
+        categoryName.textContent = category.category;
+        movies.forEach(movie => {
+          const li = document.createElement("li");
+          li.textContent = movie;
+          movieList.appendChild(li);
+        });
+
+        resultDiv.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

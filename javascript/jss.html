@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    
+</head>
+<body>
+    
+    <div id="container"></div>
+
+
+    <script>
+
+    let container = document.getElementById  ("container");  
+    let list = [];
+
+    const header = document.createElement("h2")
+          header.innerHTML ="somthing";
+          container.append(header);
+
+    const input = document.createElement("input");
+          input.placeholder = "input here";
+
+
+          container.append(input);
+    const button =document.createElement("button");
+          button.innerHTML ="add";
+          button.style.backgroundColor="green";
+          button.style.color = "white";
+          button.onclick = () =>{
+
+            list.push(input.value);
+            input.value="";
+
+           render(); 
+          }
+          
+          container.append(button);
+
+        
+          const listt = document.createElement("h3");
+                listt.innerHTML= "list";
+                container.append(listt);
+          const listdiv = document.createElement("div");
+                container.append(listdiv);
+          const all = document.createElement("div");
+
+             function render() {
+                all.innerHTML="";
+                list.forEach((element,i) => {
+                    const divv = document.createElement("div")
+                          divv.innerHTML=element
+                          divv.style.marginTop="10px"
+                    
+                    const deleteBtn = document.createElement("button")
+                          deleteBtn.innerHTML="delete"
+                          deleteBtn.style.background="red"
+                          deleteBtn.style.color="white"
+                          deleteBtn.onclick=() => {
+                            list.splice(i, 1)
+                            render()
+                            }
+
+                    const editt = document.createElement('button')
+                          editt.innerHTML ="edit"
+                          editt.style.backgroundColor="blue"
+                          editt.style.color="white"
+                          editt.onclick = () =>{
+                          
+                    const  input1 = document.createElement("input")
+                           divv.innerHTML=""
+                           input1.value = element
+
+                    const  donebtn =document.createElement("button")
+                           donebtn.innerHTML="Done"
+                           donebtn.style.alignment="left"
+                           donebtn.style.backgroundColor="orange"
+                           donebtn.style.color="white"
+                           donebtn.onclick =()=>{
+
+                            const updatee = input1.value.trim()
+
+                            if (updatee !==""){
+                               list[i]=updatee
+                            render()}
+                            else{
+                                render()
+                            }
+
+
+                           }
+                           
+                          
+                           divv.append(donebtn);
+                           divv.append(input1);
+
+                          }
+
+                          
+
+                        
+                    all.append(divv);
+                    divv.append(editt);
+                    divv.append(deleteBtn);
+                    container.append(all);
+                });
+
+
+
+             }
+
+
+           
+
+
+
+
+
+    </script>
+</body>
+</html>
